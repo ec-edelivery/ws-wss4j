@@ -96,10 +96,10 @@ public class SamlAssertionValidator extends SignatureTrustValidator {
      * @throws WSSecurityException on a failed validation
      */
     public Credential validate(Credential credential, RequestData data) throws WSSecurityException {
-        if (credential == null || credential.getSamlAssertion() == null) {
+        if (credential == null || !(credential.getToken() instanceof SamlAssertionWrapper)) {
             throw new WSSecurityException(WSSecurityException.ErrorCode.FAILURE, "noCredential");
         }
-        SamlAssertionWrapper samlAssertion = credential.getSamlAssertion();
+        SamlAssertionWrapper samlAssertion = (SamlAssertionWrapper)credential.getToken();
 
         // Check the Subject Confirmation requirements
         verifySubjectConfirmationMethod(samlAssertion);

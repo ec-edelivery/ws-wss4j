@@ -129,11 +129,11 @@ public class KerberosTokenValidator implements Validator {
      * @throws WSSecurityException on a failed validation
      */
     public Credential validate(Credential credential, RequestData data) throws WSSecurityException {
-        if (credential == null || credential.getBinarySecurityToken() == null) {
+        if (credential == null || !(credential.getToken() instanceof BinarySecurity)) {
             throw new WSSecurityException(WSSecurityException.ErrorCode.FAILURE, "noCredential");
         }
 
-        BinarySecurity binarySecurity = credential.getBinarySecurityToken();
+        BinarySecurity binarySecurity = (BinarySecurity)credential.getToken();
         if (!(binarySecurity instanceof KerberosSecurity)) {
             return credential;
         }

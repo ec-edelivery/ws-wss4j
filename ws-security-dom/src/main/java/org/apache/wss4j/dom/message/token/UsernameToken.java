@@ -34,6 +34,7 @@ import org.apache.wss4j.common.bsp.BSPEnforcer;
 import org.apache.wss4j.common.bsp.BSPRule;
 import org.apache.wss4j.common.ext.WSSecurityException;
 import org.apache.wss4j.common.principal.WSUsernameTokenPrincipalImpl;
+import org.apache.wss4j.common.token.Token;
 import org.apache.wss4j.common.util.DOM2Writer;
 import org.apache.wss4j.common.util.DateUtil;
 import org.apache.wss4j.common.util.UsernameTokenUtil;
@@ -53,7 +54,7 @@ import org.w3c.dom.Text;
  * Enhanced to support digest password type for username token signature
  * Enhanced to support passwordless usernametokens as allowed by spec.
  */
-public class UsernameToken {
+public class UsernameToken implements Token {
     public static final String BASE64_ENCODING = WSConstants.SOAPMESSAGE_NS + "#Base64Binary";
     public static final String PASSWORD_TYPE = "passwordType";
     public static final int DEFAULT_ITERATION = 1000;
@@ -532,11 +533,7 @@ public class UsernameToken {
         return node != null && Node.TEXT_NODE == node.getNodeType() ? (Text) node : null;
     }
 
-    /**
-     * Returns the dom element of this <code>UsernameToken</code> object.
-     *
-     * @return the <code>wsse:UsernameToken</code> element
-     */
+    @Override
     public Element getElement() {
         return element;
     }

@@ -96,7 +96,12 @@ public class SAMLTokenProcessor implements Processor {
         List<WSDataRef> dataRefs = createDataRefs(elem, samlAssertion, xmlSignature);
 
         Credential credential = handleSAMLToken(samlAssertion, data, validator);
-        samlAssertion = credential.getSamlAssertion();
+        if (!(credential.getToken() instanceof SamlAssertionWrapper)) {
+            throw new WSSecurityException(
+                WSSecurityException.ErrorCode.FAILURE, "invalidSAMLsecurity"
+            );
+        }
+        samlAssertion = (SamlAssertionWrapper)credential.getToken();
         if (LOG.isDebugEnabled()) {
             LOG.debug("SAML Assertion issuer " + samlAssertion.getIssuerString());
             LOG.debug(DOM2Writer.nodeToString(elem));
@@ -165,7 +170,7 @@ public class SAMLTokenProcessor implements Processor {
 
         // Now delegate the rest of the verification to the Validator
         Credential credential = new Credential();
-        credential.setSamlAssertion(samlAssertion);
+        credential.setToken(samlAssertion);
         if (validator != null) {
             return validator.validate(credential, data);
         }

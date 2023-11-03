@@ -26,10 +26,7 @@ import java.security.cert.X509Certificate;
 import javax.security.auth.Subject;
 
 import org.apache.wss4j.saml.SamlAssertionWrapper;
-import org.apache.wss4j.common.token.BinarySecurity;
-import org.apache.wss4j.dom.message.token.SecurityContextToken;
-import org.apache.wss4j.dom.message.token.Timestamp;
-import org.apache.wss4j.dom.message.token.UsernameToken;
+import org.apache.wss4j.common.token.Token;
 
 /**
  * This class stores various Credential types that can be validated and/or returned by a
@@ -40,31 +37,27 @@ public class Credential {
 
     private PublicKey publicKey;
     private X509Certificate[] certs;
-    private Timestamp timestamp;
-    private UsernameToken usernametoken;
-    private BinarySecurity binarySecurityToken;
-    private SamlAssertionWrapper samlAssertion;
+    private Token token;
     private SamlAssertionWrapper transformedToken;
-    private SecurityContextToken securityContextToken;
     private Principal principal;
     private byte[] secretKey;
     private Subject subject;
     private Object delegationCredential;
 
     /**
-     * Set a SecurityContextToken to be validated
-     * @param securityContextToken a SecurityContextToken to be validated
+     * Set a token to be validated
+     * @param token a token to be validated
      */
-    public void setSecurityContextToken(SecurityContextToken securityContextToken) {
-        this.securityContextToken = securityContextToken;
+    public void setToken(Token token) {
+        this.token = token;
     }
 
     /**
-     * Get a SecurityContextToken to be validated
-     * @return a SecurityContextToken to be validated
+     * Get a token to be validated
+     * @return a token to be validated
      */
-    public SecurityContextToken getSecurityContextToken() {
-        return securityContextToken;
+    public Token getToken() {
+        return token;
     }
 
     /**
@@ -114,70 +107,6 @@ public class Credential {
      */
     public X509Certificate[] getCertificates() {
         return certs;
-    }
-
-    /**
-     * Set a Timestamp to be validated
-     * @param timestamp a Timestamp to be validated
-     */
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    /**
-     * Get a Timestamp to be validated
-     * @return a Timestamp to be validated
-     */
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    /**
-     * Set a UsernameToken to be validated
-     * @param usernametoken a UsernameToken to be validated
-     */
-    public void setUsernametoken(UsernameToken usernametoken) {
-        this.usernametoken = usernametoken;
-    }
-
-    /**
-     * Get a UsernameToken to be validated
-     * @return a UsernameToken to be validated
-     */
-    public UsernameToken getUsernametoken() {
-        return usernametoken;
-    }
-
-    /**
-     * Set the BinarySecurityToken to be validated
-     * @param binarySecurityToken the BinarySecurityToken to be validated
-     */
-    public void setBinarySecurityToken(BinarySecurity binarySecurityToken) {
-        this.binarySecurityToken = binarySecurityToken;
-    }
-
-    /**
-     * Get the BinarySecurityToken to be validated
-     * @return the BinarySecurityToken to be validated
-     */
-    public BinarySecurity getBinarySecurityToken() {
-        return binarySecurityToken;
-    }
-
-    /**
-     * Set an SamlAssertionWrapper to be validated
-     * @param samlAssertion an SamlAssertionWrapper to be validated
-     */
-    public void setSamlAssertion(SamlAssertionWrapper samlAssertion) {
-        this.samlAssertion = samlAssertion;
-    }
-
-    /**
-     * Get an SamlAssertionWrapper to be validated
-     * @return an SamlAssertionWrapper to be validated
-     */
-    public SamlAssertionWrapper getSamlAssertion() {
-        return samlAssertion;
     }
 
     /**

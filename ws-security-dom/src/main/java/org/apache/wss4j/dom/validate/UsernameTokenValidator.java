@@ -58,7 +58,7 @@ public class UsernameTokenValidator implements Validator {
      * @throws WSSecurityException on a failed validation
      */
     public Credential validate(Credential credential, RequestData data) throws WSSecurityException {
-        if (credential == null || credential.getUsernametoken() == null) {
+        if (credential == null || !(credential.getToken() instanceof UsernameToken)) {
             throw new WSSecurityException(WSSecurityException.ErrorCode.FAILURE, "noCredential");
         }
 
@@ -66,7 +66,7 @@ public class UsernameTokenValidator implements Validator {
         boolean passwordsAreEncoded = data.isEncodePasswords();
         String requiredPasswordType = data.getRequiredPasswordType();
 
-        UsernameToken usernameToken = credential.getUsernametoken();
+        UsernameToken usernameToken = (UsernameToken)credential.getToken();
         usernameToken.setPasswordsAreEncoded(passwordsAreEncoded);
 
         String pwType = usernameToken.getPasswordType();

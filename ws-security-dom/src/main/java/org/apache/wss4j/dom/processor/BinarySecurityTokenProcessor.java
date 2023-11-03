@@ -87,7 +87,7 @@ public class BinarySecurityTokenProcessor implements Processor {
         if (validator != null) {
             // Hook to allow the user to validate the BinarySecurityToken
             Credential credential = new Credential();
-            credential.setBinarySecurityToken(token);
+            credential.setToken(token);
             credential.setCertificates(certs);
 
             Credential returnedCredential = validator.validate(credential, data);

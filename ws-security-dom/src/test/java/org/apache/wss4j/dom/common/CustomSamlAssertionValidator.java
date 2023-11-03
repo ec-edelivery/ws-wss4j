@@ -34,7 +34,10 @@ public class CustomSamlAssertionValidator extends SamlAssertionValidator {
         //
         // Do some custom validation on the assertion
         //
-        SamlAssertionWrapper samlAssertion = credential.getSamlAssertion();
+        if (!(credential.getToken() instanceof SamlAssertionWrapper)) {
+            throw new WSSecurityException(WSSecurityException.ErrorCode.FAILURE, "invalidSAMLsecurity");
+        }
+        SamlAssertionWrapper samlAssertion = (SamlAssertionWrapper)credential.getToken();
         if (!"www.example.com".equals(samlAssertion.getIssuerString())) {
             throw new WSSecurityException(WSSecurityException.ErrorCode.FAILURE, "invalidSAMLsecurity");
         }

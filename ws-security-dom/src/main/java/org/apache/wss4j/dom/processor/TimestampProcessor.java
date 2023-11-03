@@ -44,7 +44,7 @@ public class TimestampProcessor implements Processor {
         //
         Timestamp timestamp = new Timestamp(elem, data.getBSPEnforcer());
         Credential credential = new Credential();
-        credential.setTimestamp(timestamp);
+        credential.setToken(timestamp);
 
         WSSecurityEngineResult result =
             new WSSecurityEngineResult(WSConstants.TS, timestamp);

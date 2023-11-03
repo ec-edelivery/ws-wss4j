@@ -57,7 +57,7 @@ public class SecurityContextTokenProcessor implements Processor {
         if (validator != null) {
             // Hook to allow the user to validate the SecurityContextToken
             Credential credential = new Credential();
-            credential.setSecurityContextToken(sct);
+            credential.setToken(sct);
 
             Credential returnedCredential = validator.validate(credential, data);
             result.put(WSSecurityEngineResult.TAG_VALIDATED_TOKEN, Boolean.TRUE);

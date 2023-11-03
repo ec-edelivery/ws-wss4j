@@ -66,14 +66,14 @@ public class JAASUsernameTokenValidator implements Validator {
      * @throws WSSecurityException on a failed validation
      */
     public Credential validate(Credential credential, RequestData data) throws WSSecurityException {
-        if (credential == null || credential.getUsernametoken() == null) {
+        if (credential == null || !(credential.getToken() instanceof UsernameToken)) {
             throw new WSSecurityException(WSSecurityException.ErrorCode.FAILURE, "noCredential");
         }
 
         String user = null;
         String password = null;
 
-        UsernameToken usernameToken = credential.getUsernametoken();
+        UsernameToken usernameToken = (UsernameToken)credential.getToken();
 
         user = usernameToken.getName();
         String pwType = usernameToken.getPasswordType();

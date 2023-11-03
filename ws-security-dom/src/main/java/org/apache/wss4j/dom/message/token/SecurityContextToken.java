@@ -21,6 +21,7 @@ package org.apache.wss4j.dom.message.token;
 
 import javax.xml.namespace.QName;
 
+import org.apache.wss4j.common.token.Token;
 import org.apache.wss4j.dom.WSConstants;
 import org.apache.wss4j.common.ext.WSSecurityException;
 import org.apache.wss4j.common.util.DOM2Writer;
@@ -32,7 +33,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
-public class SecurityContextToken {
+public class SecurityContextToken implements Token {
 
     /**
      * Security context token element
@@ -241,11 +242,7 @@ public class SecurityContextToken {
         return node != null && Node.TEXT_NODE == node.getNodeType() ? (Text) node : null;
     }
 
-    /**
-     * Returns the dom element of this <code>SecurityContextToken</code> object.
-     *
-     * @return the <code>wsse:SecurityContextToken</code> element
-     */
+    @Override
     public Element getElement() {
         return element;
     }

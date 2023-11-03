@@ -297,7 +297,7 @@ public class ValidatorTest {
     private static class BSTValidator implements Validator {
 
         public Credential validate(Credential credential, RequestData data) throws WSSecurityException {
-            BinarySecurity token = credential.getBinarySecurityToken();
+            BinarySecurity token = (BinarySecurity)credential.getToken();
             if (token == null) {
                 throw new WSSecurityException(WSSecurityException.ErrorCode.FAILURE);
             }

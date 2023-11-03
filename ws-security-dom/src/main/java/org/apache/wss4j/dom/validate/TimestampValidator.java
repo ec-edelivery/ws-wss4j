@@ -38,7 +38,7 @@ public class TimestampValidator implements Validator {
      * @throws WSSecurityException on a failed validation
      */
     public Credential validate(Credential credential, RequestData data) throws WSSecurityException {
-        if (credential == null || credential.getTimestamp() == null) {
+        if (credential == null || !(credential.getToken() instanceof Timestamp)) {
             throw new WSSecurityException(WSSecurityException.ErrorCode.FAILURE, "noCredential");
         }
         if (data.getWssConfig() == null) {
@@ -49,7 +49,7 @@ public class TimestampValidator implements Validator {
         int timeStampTTL = data.getTimeStampTTL();
         int futureTimeToLive = data.getTimeStampFutureTTL();
 
-        Timestamp timeStamp = credential.getTimestamp();
+        Timestamp timeStamp = (Timestamp)credential.getToken();
 
         // See if the Timestamp has expired
         if (timeStampStrict && timeStamp.isExpired()) {

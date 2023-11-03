@@ -42,7 +42,7 @@ import org.w3c.dom.Text;
 /**
  * Binary Security Token.
  */
-public class BinarySecurity {
+public class BinarySecurity implements Token {
     public static final QName TOKEN_BST = new QName(WSS4JConstants.WSSE_NS, "BinarySecurityToken");
     public static final QName TOKEN_KI = new QName(WSS4JConstants.WSSE_NS, "KeyIdentifier");
     private static final org.slf4j.Logger LOG =
@@ -263,11 +263,7 @@ public class BinarySecurity {
         return (Text)element.appendChild(textNode);
     }
 
-    /**
-     * return the dom element.
-     *
-     * @return the dom element.
-     */
+    @Override
     public Element getElement() {
         return element;
     }

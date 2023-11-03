@@ -61,7 +61,12 @@ public class UsernameTokenProcessor implements Processor {
 
         Validator validator = data.getValidator(WSConstants.USERNAME_TOKEN);
         Credential credential = handleUsernameToken(elem, validator, data);
-        UsernameToken token = credential.getUsernametoken();
+        if (!(credential.getToken() instanceof UsernameToken)) {
+            throw new WSSecurityException(
+                WSSecurityException.ErrorCode.FAILURE, "invalidToken", new Object[] {"Username"}
+            );
+        }
+        UsernameToken token = (UsernameToken)credential.getToken();
 
         int action = WSConstants.UT;
         byte[] secretKey = null;
@@ -167,7 +172,7 @@ public class UsernameTokenProcessor implements Processor {
         }
 
         Credential credential = new Credential();
-        credential.setUsernametoken(ut);
+        credential.setToken(ut);
         if (validator != null) {
             return validator.validate(credential, data);
         }

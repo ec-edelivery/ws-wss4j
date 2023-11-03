@@ -34,6 +34,7 @@ import org.apache.wss4j.common.derivedKey.ConversationConstants;
 import org.apache.wss4j.common.derivedKey.DerivedKeyUtils;
 import org.apache.wss4j.common.principal.WSDerivedKeyTokenPrincipal;
 import org.apache.wss4j.common.token.SecurityTokenReference;
+import org.apache.wss4j.common.token.Token;
 import org.apache.wss4j.common.util.DOM2Writer;
 import org.apache.wss4j.common.util.XMLUtils;
 import org.apache.wss4j.dom.util.WSSecurityUtil;
@@ -54,7 +55,7 @@ import org.w3c.dom.Text;
  </DerivedKeyToken>
  */
 
-public class DerivedKeyToken {
+public class DerivedKeyToken implements Token {
 
     private static final org.slf4j.Logger LOG =
         org.slf4j.LoggerFactory.getLogger(DerivedKeyToken.class);
@@ -469,11 +470,7 @@ public class DerivedKeyToken {
         return node != null && Node.TEXT_NODE == node.getNodeType() ? (Text) node : null;
     }
 
-    /**
-     * Returns the dom element of this <code>SecurityContextToken</code> object.
-     *
-     * @return the DerivedKeyToken element
-     */
+    @Override
     public Element getElement() {
         return element;
     }

@@ -28,6 +28,7 @@ import java.util.List;
 import org.apache.wss4j.common.crypto.Crypto;
 import org.apache.wss4j.common.crypto.CryptoType;
 import org.apache.wss4j.common.ext.WSSecurityException;
+import org.apache.wss4j.common.token.Token;
 import org.apache.wss4j.saml.builder.SAML1ComponentBuilder;
 import org.apache.wss4j.saml.builder.SAML2ComponentBuilder;
 import org.apache.wss4j.common.util.DOM2Writer;
@@ -67,7 +68,7 @@ import org.w3c.dom.Element;
  * Class SamlAssertionWrapper can generate, sign, and validate both SAML v1.1
  * and SAML v2.0 assertions.
  */
-public class SamlAssertionWrapper {
+public class SamlAssertionWrapper implements Token {
     /**
      * Field LOG
      */
@@ -709,10 +710,7 @@ public class SamlAssertionWrapper {
         return samlVersion;
     }
 
-    /**
-     * Get the Assertion as a DOM Element.
-     * @return the assertion as a DOM Element
-     */
+    @Override
     public Element getElement() {
         return assertionElement;
     }

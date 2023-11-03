@@ -29,6 +29,7 @@ import java.time.temporal.ChronoField;
 import org.apache.wss4j.common.bsp.BSPEnforcer;
 import org.apache.wss4j.common.bsp.BSPRule;
 import org.apache.wss4j.common.ext.WSSecurityException;
+import org.apache.wss4j.common.token.Token;
 import org.apache.wss4j.common.util.DOM2Writer;
 import org.apache.wss4j.common.util.DateUtil;
 import org.apache.wss4j.common.util.WSCurrentTimeSource;
@@ -44,7 +45,7 @@ import org.w3c.dom.Text;
  * Timestamp according to SOAP Message Security 1.0,
  * chapter 10 / appendix A.2
  */
-public class Timestamp {
+public class Timestamp implements Token {
 
     private Element element;
     private Instant created;
@@ -210,11 +211,7 @@ public class Timestamp {
         element.setAttributeNS(XMLUtils.XMLNS_NS, "xmlns:" + WSConstants.WSU_PREFIX, WSConstants.WSU_NS);
     }
 
-    /**
-     * Returns the dom element of this <code>Timestamp</code> object.
-     *
-     * @return the <code>wsse:UsernameToken</code> element
-     */
+    @Override
     public Element getElement() {
         return element;
     }
