@@ -23,12 +23,12 @@ import org.apache.wss4j.common.crypto.Crypto;
 import org.apache.wss4j.common.crypto.CryptoFactory;
 import org.apache.wss4j.common.crypto.CryptoType;
 import org.apache.wss4j.common.ext.WSSecurityException;
-import org.apache.wss4j.common.saml.SAMLCallback;
-import org.apache.wss4j.common.saml.bean.AuthenticationStatementBean;
-import org.apache.wss4j.common.saml.bean.KeyInfoBean;
-import org.apache.wss4j.common.saml.bean.SubjectBean;
-import org.apache.wss4j.common.saml.bean.Version;
-import org.apache.wss4j.common.saml.builder.SAML1Constants;
+import org.apache.wss4j.saml.SAMLCallback;
+import org.apache.wss4j.saml.bean.AuthenticationStatementBean;
+import org.apache.wss4j.saml.bean.KeyInfoBean;
+import org.apache.wss4j.saml.bean.SubjectBean;
+import org.apache.wss4j.saml.bean.Version;
+import org.apache.wss4j.saml.builder.SAML1Constants;
 
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;

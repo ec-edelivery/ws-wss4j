@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.wss4j.common.saml.bean;
+package org.apache.wss4j.saml.bean;
 
 /**
  * This class represents a SubjectLocality.

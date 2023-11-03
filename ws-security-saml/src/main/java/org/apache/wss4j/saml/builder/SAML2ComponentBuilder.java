@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.wss4j.common.saml.builder;
+package org.apache.wss4j.saml.builder;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -26,22 +26,22 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wss4j.common.ext.WSSecurityException;
-import org.apache.wss4j.common.saml.OpenSAMLUtil;
-import org.apache.wss4j.common.saml.bean.ActionBean;
-import org.apache.wss4j.common.saml.bean.AdviceBean;
-import org.apache.wss4j.common.saml.bean.AttributeBean;
-import org.apache.wss4j.common.saml.bean.AttributeStatementBean;
-import org.apache.wss4j.common.saml.bean.AudienceRestrictionBean;
-import org.apache.wss4j.common.saml.bean.AuthDecisionStatementBean;
-import org.apache.wss4j.common.saml.bean.AuthenticationStatementBean;
-import org.apache.wss4j.common.saml.bean.ConditionsBean;
-import org.apache.wss4j.common.saml.bean.DelegateBean;
-import org.apache.wss4j.common.saml.bean.KeyInfoBean;
-import org.apache.wss4j.common.saml.bean.NameIDBean;
-import org.apache.wss4j.common.saml.bean.ProxyRestrictionBean;
-import org.apache.wss4j.common.saml.bean.SubjectBean;
-import org.apache.wss4j.common.saml.bean.SubjectConfirmationDataBean;
-import org.apache.wss4j.common.saml.bean.SubjectLocalityBean;
+import org.apache.wss4j.saml.OpenSAMLUtil;
+import org.apache.wss4j.saml.bean.ActionBean;
+import org.apache.wss4j.saml.bean.AdviceBean;
+import org.apache.wss4j.saml.bean.AttributeBean;
+import org.apache.wss4j.saml.bean.AttributeStatementBean;
+import org.apache.wss4j.saml.bean.AudienceRestrictionBean;
+import org.apache.wss4j.saml.bean.AuthDecisionStatementBean;
+import org.apache.wss4j.saml.bean.AuthenticationStatementBean;
+import org.apache.wss4j.saml.bean.ConditionsBean;
+import org.apache.wss4j.saml.bean.DelegateBean;
+import org.apache.wss4j.saml.bean.KeyInfoBean;
+import org.apache.wss4j.saml.bean.NameIDBean;
+import org.apache.wss4j.saml.bean.ProxyRestrictionBean;
+import org.apache.wss4j.saml.bean.SubjectBean;
+import org.apache.wss4j.saml.bean.SubjectConfirmationDataBean;
+import org.apache.wss4j.saml.bean.SubjectLocalityBean;
 import org.apache.xml.security.stax.impl.util.IDGenerator;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.XMLObjectBuilderFactory;

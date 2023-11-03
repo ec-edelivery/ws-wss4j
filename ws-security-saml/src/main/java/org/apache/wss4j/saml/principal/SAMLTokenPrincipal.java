@@ -16,9 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.wss4j.common.principal;
+package org.apache.wss4j.saml.principal;
 
-import org.apache.wss4j.common.saml.SamlAssertionWrapper;
+import org.apache.wss4j.saml.SamlAssertionWrapper;
 
 import java.security.Principal;
 

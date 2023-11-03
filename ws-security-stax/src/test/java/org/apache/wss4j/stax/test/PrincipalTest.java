@@ -31,6 +31,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.wss4j.common.bsp.BSPRule;
 import org.apache.wss4j.common.principal.*;
+import org.apache.wss4j.saml.principal.SAMLTokenPrincipal;
 import org.apache.wss4j.stax.securityToken.KeyValueSecurityToken;
 import org.apache.wss4j.stax.securityToken.SamlSecurityToken;
 import org.apache.wss4j.stax.securityToken.UsernameSecurityToken;

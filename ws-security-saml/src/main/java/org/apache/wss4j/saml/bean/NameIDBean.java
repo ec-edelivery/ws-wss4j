@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.wss4j.common.saml.bean;
+package org.apache.wss4j.saml.bean;
 
 /**
  * Class NameIDBean represents a SAML NameID (can be used to create both SAML v1.1 and v2.0 statements)

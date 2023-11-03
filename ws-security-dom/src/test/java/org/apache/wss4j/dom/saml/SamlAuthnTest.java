@@ -25,9 +25,9 @@ import java.time.Instant;
 import javax.security.auth.callback.CallbackHandler;
 
 import org.apache.wss4j.common.ext.WSSecurityException;
-import org.apache.wss4j.common.saml.SAMLCallback;
-import org.apache.wss4j.common.saml.SAMLUtil;
-import org.apache.wss4j.common.saml.SamlAssertionWrapper;
+import org.apache.wss4j.saml.SAMLCallback;
+import org.apache.wss4j.saml.SAMLUtil;
+import org.apache.wss4j.saml.SamlAssertionWrapper;
 import org.apache.wss4j.common.util.SOAPUtil;
 import org.apache.wss4j.common.util.XMLUtils;
 import org.apache.wss4j.dom.WSConstants;

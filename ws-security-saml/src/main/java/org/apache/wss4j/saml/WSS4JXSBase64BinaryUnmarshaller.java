@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.wss4j.common.saml;
+package org.apache.wss4j.saml;
 
 import net.shibboleth.utilities.java.support.primitive.StringSupport;
 import org.opensaml.core.xml.XMLObject;

@@ -25,10 +25,10 @@ import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.wss4j.common.saml.SamlAssertionWrapper;
-import org.apache.wss4j.common.saml.SAMLCallback;
-import org.apache.wss4j.common.saml.SAMLUtil;
-import org.apache.wss4j.common.saml.builder.SAML1Constants;
+import org.apache.wss4j.saml.SamlAssertionWrapper;
+import org.apache.wss4j.saml.SAMLCallback;
+import org.apache.wss4j.saml.SAMLUtil;
+import org.apache.wss4j.saml.builder.SAML1Constants;
 import org.w3c.dom.Element;
 
 /**

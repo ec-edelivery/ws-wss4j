@@ -20,7 +20,7 @@
 package org.apache.wss4j.dom.saml;
 
 import javax.xml.crypto.dsig.CanonicalizationMethod;
-import org.apache.wss4j.common.saml.SamlAssertionWrapper;
+import org.apache.wss4j.saml.SamlAssertionWrapper;
 import org.apache.wss4j.common.util.SOAPUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -37,9 +37,9 @@ import org.apache.wss4j.dom.handler.RequestData;
 import org.apache.wss4j.dom.handler.WSHandlerResult;
 import org.apache.wss4j.dom.message.WSSecHeader;
 import org.apache.wss4j.dom.message.WSSecSAMLToken;
-import org.apache.wss4j.common.saml.SAMLCallback;
-import org.apache.wss4j.common.saml.SAMLUtil;
-import org.apache.wss4j.common.saml.builder.SAML1Constants;
+import org.apache.wss4j.saml.SAMLCallback;
+import org.apache.wss4j.saml.SAMLUtil;
+import org.apache.wss4j.saml.builder.SAML1Constants;
 import org.apache.wss4j.common.util.XMLUtils;
 import org.apache.wss4j.dom.util.WSSecurityUtil;
 

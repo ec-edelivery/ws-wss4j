@@ -17,16 +17,16 @@
  * under the License.
  */
 
-package org.apache.wss4j.common.saml;
+package org.apache.wss4j.saml;
 
 import org.apache.wss4j.common.crypto.Crypto;
-import org.apache.wss4j.common.saml.bean.AdviceBean;
-import org.apache.wss4j.common.saml.bean.AttributeStatementBean;
-import org.apache.wss4j.common.saml.bean.AuthDecisionStatementBean;
-import org.apache.wss4j.common.saml.bean.AuthenticationStatementBean;
-import org.apache.wss4j.common.saml.bean.ConditionsBean;
-import org.apache.wss4j.common.saml.bean.SubjectBean;
-import org.apache.wss4j.common.saml.bean.Version;
+import org.apache.wss4j.saml.bean.AdviceBean;
+import org.apache.wss4j.saml.bean.AttributeStatementBean;
+import org.apache.wss4j.saml.bean.AuthDecisionStatementBean;
+import org.apache.wss4j.saml.bean.AuthenticationStatementBean;
+import org.apache.wss4j.saml.bean.ConditionsBean;
+import org.apache.wss4j.saml.bean.SubjectBean;
+import org.apache.wss4j.saml.bean.Version;
 import org.opensaml.saml.common.SAMLVersion;
 import org.w3c.dom.Element;
 

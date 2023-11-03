@@ -26,7 +26,6 @@ import javax.xml.namespace.QName;
 
 import org.apache.wss4j.common.crypto.Crypto;
 import org.apache.wss4j.common.ext.WSSecurityException;
-import org.apache.wss4j.common.principal.SAMLTokenPrincipalImpl;
 import org.apache.wss4j.common.token.BinarySecurity;
 import org.apache.wss4j.common.token.PKIPathSecurity;
 import org.apache.wss4j.common.token.X509Security;
@@ -38,6 +37,7 @@ import org.apache.wss4j.dom.message.token.KerberosSecurity;
 import org.apache.wss4j.dom.util.WSSecurityUtil;
 import org.apache.wss4j.dom.validate.Credential;
 import org.apache.wss4j.dom.validate.Validator;
+import org.apache.wss4j.saml.principal.SAMLTokenPrincipalImpl;
 import org.w3c.dom.Element;
 
 /**

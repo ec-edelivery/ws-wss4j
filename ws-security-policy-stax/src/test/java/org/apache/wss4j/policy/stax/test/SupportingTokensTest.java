@@ -25,10 +25,10 @@ import javax.xml.namespace.QName;
 
 import org.apache.wss4j.common.WSSPolicyException;
 import org.apache.wss4j.common.ext.WSSecurityException;
-import org.apache.wss4j.common.saml.SAMLCallback;
-import org.apache.wss4j.common.saml.SamlAssertionWrapper;
-import org.apache.wss4j.common.saml.bean.SubjectBean;
-import org.apache.wss4j.common.saml.bean.Version;
+import org.apache.wss4j.saml.SAMLCallback;
+import org.apache.wss4j.saml.SamlAssertionWrapper;
+import org.apache.wss4j.saml.bean.SubjectBean;
+import org.apache.wss4j.saml.bean.Version;
 import org.apache.wss4j.common.util.DateUtil;
 import org.apache.wss4j.policy.stax.enforcer.PolicyEnforcer;
 import org.apache.wss4j.stax.ext.WSSConstants;

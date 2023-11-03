@@ -24,11 +24,11 @@ import java.util.List;
 
 import org.apache.wss4j.common.cache.ReplayCache;
 import org.apache.wss4j.common.ext.WSSecurityException;
-import org.apache.wss4j.common.saml.OpenSAMLUtil;
-import org.apache.wss4j.common.saml.SAMLKeyInfo;
-import org.apache.wss4j.common.saml.SamlAssertionWrapper;
-import org.apache.wss4j.common.saml.builder.SAML1Constants;
-import org.apache.wss4j.common.saml.builder.SAML2Constants;
+import org.apache.wss4j.saml.OpenSAMLUtil;
+import org.apache.wss4j.saml.SAMLKeyInfo;
+import org.apache.wss4j.saml.SamlAssertionWrapper;
+import org.apache.wss4j.saml.builder.SAML1Constants;
+import org.apache.wss4j.saml.builder.SAML2Constants;
 import org.apache.wss4j.dom.handler.RequestData;
 import org.opensaml.saml.common.SAMLVersion;
 

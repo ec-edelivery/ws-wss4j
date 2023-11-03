@@ -29,9 +29,9 @@ import java.util.List;
 
 import org.apache.wss4j.common.ext.WSSecurityException;
 import org.apache.wss4j.common.principal.WSDerivedKeyTokenPrincipal;
-import org.apache.wss4j.common.saml.OpenSAMLUtil;
-import org.apache.wss4j.common.saml.SAMLKeyInfo;
-import org.apache.wss4j.common.saml.SamlAssertionWrapper;
+import org.apache.wss4j.saml.OpenSAMLUtil;
+import org.apache.wss4j.saml.SAMLKeyInfo;
+import org.apache.wss4j.saml.SamlAssertionWrapper;
 import org.apache.wss4j.dom.WSConstants;
 import org.apache.wss4j.dom.WSDataRef;
 import org.apache.wss4j.dom.engine.WSSecurityEngineResult;

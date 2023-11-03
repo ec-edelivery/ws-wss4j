@@ -22,8 +22,8 @@ package org.apache.wss4j.stax.test.saml;
 import org.apache.wss4j.common.crypto.Crypto;
 import org.apache.wss4j.common.crypto.CryptoFactory;
 import org.apache.wss4j.common.crypto.CryptoType;
-import org.apache.wss4j.common.saml.SAMLCallback;
-import org.apache.wss4j.common.saml.builder.SAML2Constants;
+import org.apache.wss4j.saml.SAMLCallback;
+import org.apache.wss4j.saml.builder.SAML2Constants;
 
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.UnsupportedCallbackException;

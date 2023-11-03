@@ -22,12 +22,12 @@ package org.apache.wss4j.dom.processor;
 import java.time.Instant;
 import java.util.List;
 
-import org.apache.wss4j.common.principal.SAMLTokenPrincipalImpl;
 import org.apache.wss4j.common.principal.WSUsernameTokenPrincipalImpl;
 import org.apache.wss4j.common.util.UsernameTokenUtil;
 import org.w3c.dom.Element;
 import org.apache.wss4j.common.cache.ReplayCache;
 import org.apache.wss4j.common.ext.WSSecurityException;
+import org.apache.wss4j.saml.principal.SAMLTokenPrincipalImpl;
 import org.apache.wss4j.dom.WSConstants;
 import org.apache.wss4j.dom.engine.WSSecurityEngineResult;
 import org.apache.wss4j.dom.handler.RequestData;

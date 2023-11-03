@@ -19,7 +19,7 @@
 
 package org.apache.wss4j.dom.engine;
 
-import org.apache.wss4j.common.saml.SamlAssertionWrapper;
+import org.apache.wss4j.saml.SamlAssertionWrapper;
 import org.apache.wss4j.common.token.BinarySecurity;
 import org.apache.wss4j.dom.WSDataRef;
 import org.apache.wss4j.dom.message.token.SecurityContextToken;

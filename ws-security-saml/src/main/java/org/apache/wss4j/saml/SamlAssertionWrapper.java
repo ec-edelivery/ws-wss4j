@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.wss4j.common.saml;
+package org.apache.wss4j.saml;
 
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
@@ -28,8 +28,8 @@ import java.util.List;
 import org.apache.wss4j.common.crypto.Crypto;
 import org.apache.wss4j.common.crypto.CryptoType;
 import org.apache.wss4j.common.ext.WSSecurityException;
-import org.apache.wss4j.common.saml.builder.SAML1ComponentBuilder;
-import org.apache.wss4j.common.saml.builder.SAML2ComponentBuilder;
+import org.apache.wss4j.saml.builder.SAML1ComponentBuilder;
+import org.apache.wss4j.saml.builder.SAML2ComponentBuilder;
 import org.apache.wss4j.common.util.DOM2Writer;
 import org.apache.wss4j.common.util.InetAddressUtils;
 import org.apache.xml.security.stax.impl.util.IDGenerator;

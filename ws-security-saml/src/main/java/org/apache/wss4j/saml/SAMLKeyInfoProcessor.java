@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.wss4j.common.saml;
+package org.apache.wss4j.saml;
 
 import org.apache.wss4j.common.ext.WSSecurityException;
 import org.w3c.dom.Element;

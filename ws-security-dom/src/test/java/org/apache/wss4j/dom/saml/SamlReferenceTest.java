@@ -20,7 +20,7 @@
 package org.apache.wss4j.dom.saml;
 
 import org.apache.wss4j.common.WSEncryptionPart;
-import org.apache.wss4j.common.saml.SamlAssertionWrapper;
+import org.apache.wss4j.saml.SamlAssertionWrapper;
 import org.apache.wss4j.common.util.SOAPUtil;
 import org.apache.wss4j.dom.WSConstants;
 import org.apache.wss4j.dom.WSDataRef;
@@ -36,10 +36,10 @@ import org.apache.wss4j.dom.handler.WSHandlerResult;
 import org.apache.wss4j.common.crypto.Crypto;
 import org.apache.wss4j.common.crypto.CryptoFactory;
 import org.apache.wss4j.common.crypto.Merlin;
-import org.apache.wss4j.common.saml.SAMLCallback;
-import org.apache.wss4j.common.saml.SAMLUtil;
-import org.apache.wss4j.common.saml.builder.SAML1Constants;
-import org.apache.wss4j.common.saml.builder.SAML2Constants;
+import org.apache.wss4j.saml.SAMLCallback;
+import org.apache.wss4j.saml.SAMLUtil;
+import org.apache.wss4j.saml.builder.SAML1Constants;
+import org.apache.wss4j.saml.builder.SAML2Constants;
 import org.apache.wss4j.common.util.KeyUtils;
 import org.apache.wss4j.common.util.Loader;
 import org.apache.wss4j.common.util.XMLUtils;

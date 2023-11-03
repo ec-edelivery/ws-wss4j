@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.wss4j.common.saml.builder;
+package org.apache.wss4j.saml.builder;
 
 
 /**
