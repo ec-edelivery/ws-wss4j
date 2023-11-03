@@ -117,12 +117,13 @@ public class SAMLTokenProcessor implements Processor {
         data.getWsDocInfo().addTokenElement(elem);
         WSSecurityEngineResult result = null;
         if (samlAssertion.isSigned()) {
-            result = new WSSecurityEngineResult(WSConstants.ST_SIGNED, samlAssertion);
+            result = new WSSecurityEngineResult(WSConstants.ST_SIGNED, samlAssertion.getElement());
             result.put(WSSecurityEngineResult.TAG_DATA_REF_URIS, dataRefs);
             result.put(WSSecurityEngineResult.TAG_SIGNATURE_VALUE, samlAssertion.getSignatureValue());
         } else {
-            result = new WSSecurityEngineResult(WSConstants.ST_UNSIGNED, samlAssertion);
+            result = new WSSecurityEngineResult(WSConstants.ST_UNSIGNED, samlAssertion.getElement());
         }
+        result.put(WSSecurityEngineResult.TAG_SAML_ASSERTION, samlAssertion);
 
         if (id.length() != 0) {
             result.put(WSSecurityEngineResult.TAG_ID, id);
