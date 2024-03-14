@@ -753,6 +753,21 @@ public class ConfigurationConstants {
     public static final String ENC_KEY_AGREEMENT_METHOD = "encryptionKeyAgreementMethod";
 
     /**
+     * Defines the Key Derivation algorithm to derive encryption key used with the keyAgreement method.
+     * The default algorithm is:
+     * "http://www.w3.org/2021/04/xmldsig-more#hkdf"
+     *
+     * <p/>
+     * The application may set this parameter using the following method:
+     * <pre>
+     *      call.setProperty(ConfigurationConstants.ENC_KEY_DERIVATION_FUNCTION,
+     *          WSConstants.KEYDERIVATION_HKDF);
+     * </pre>
+     *
+     */
+    public static final String ENC_KEY_DERIVATION_FUNCTION = "encryptionKeyDerivationFunction";
+
+    /**
      * Parameter to define which parts of the request shall be encrypted.
      * <p/>
      * The value of this parameter is a list of semi-colon separated

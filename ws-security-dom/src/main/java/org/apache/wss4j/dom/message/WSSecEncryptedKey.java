@@ -21,6 +21,7 @@ package org.apache.wss4j.dom.message;
 
 import java.security.*;
 import java.security.cert.X509Certificate;
+import java.util.Random;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKey;
@@ -32,6 +33,7 @@ import javax.xml.crypto.dsig.keyinfo.KeyInfo;
 import javax.xml.crypto.dsig.keyinfo.KeyInfoFactory;
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
 
+import org.apache.wss4j.common.WSS4JConstants;
 import org.apache.wss4j.common.crypto.Crypto;
 import org.apache.wss4j.common.crypto.CryptoType;
 import org.apache.wss4j.common.ext.WSSecurityException;
@@ -80,9 +82,20 @@ public class WSSecEncryptedKey extends WSSecBase {
     /**
      * Key agreement method algorithm used to encrypt the transport key.
      * Example for ECDH-ES: http://www.w3.org/2009/xmlenc11#ECDH-ES
-     *
+     * and with X25519: http://www.w3.org/2009/xmlenc11#x25519
      */
     private String keyAgreementMethod;
+
+    /**
+     * Method to derive the key to be used to encrypt the data with the Key keyAgreementMethod
+     *
+     */
+    private String keyDerivationMethod = WSS4JConstants.KEYDERIVATION_HKDF;
+
+    /**
+     * The key derivation algorithm to use with Key derivation function such as HKDF methods.
+     */
+    private String hmacAlgorithm = WSS4JConstants.HMAC_SHA256;
 
     /**
      * Digest Algorithm to be used with RSA-OAEP. The default is SHA-1 (which is not
@@ -215,9 +228,9 @@ public class WSSecEncryptedKey extends WSSecBase {
 
             Key kek;
             KeyAgreementParameters dhSpec = null;
-            if (WSConstants.AGREEMENT_METHOD_ECDH_ES.equals(keyAgreementMethod)) {
+            if (isSupportedKeyAgreementMethod(keyAgreementMethod)) {
                 // generate ephemeral keys the key must match receivers keys
-                dhSpec = buildKeyAgreementParameter(remoteCert.getPublicKey());
+                dhSpec = buildKeyAgreementParameter(remoteCert.getPublicKey(), keyDerivationMethod);
                 kek = generateEncryptionKey(dhSpec);
             } else {
                 kek = remoteCert.getPublicKey();
@@ -373,7 +386,7 @@ public class WSSecEncryptedKey extends WSSecBase {
             keyInfoElement.setAttributeNS(
                 WSConstants.XMLNS_NS, "xmlns:" + WSConstants.SIG_PREFIX, WSConstants.SIG_NS
             );
-            if (WSConstants.AGREEMENT_METHOD_ECDH_ES.equals(keyAgreementMethod)) {
+            if (isSupportedKeyAgreementMethod(keyAgreementMethod)) {
                 try {
                     AgreementMethodImpl agreementMethod = new AgreementMethodImpl(getDocument(), dhSpec);
                     agreementMethod.getRecipientKeyInfo().addUnknownElement(secToken.getElement());
@@ -389,7 +402,12 @@ public class WSSecEncryptedKey extends WSSecBase {
             }
             encryptedKeyElement.appendChild(keyInfoElement);
         }
+    }
 
+    private boolean isSupportedKeyAgreementMethod(String keyAgreementMethod) {
+        return WSConstants.AGREEMENT_METHOD_ECDH_ES.equals(keyAgreementMethod)
+                || WSConstants.AGREEMENT_METHOD_X25519.equals(keyAgreementMethod)
+                || WSConstants.AGREEMENT_METHOD_X448.equals(keyAgreementMethod);
     }
 
     private void addIssuerSerial(X509Certificate remoteCert, SecurityTokenReference secToken, boolean isCommaDelimited)
@@ -543,12 +561,33 @@ public class WSSecEncryptedKey extends WSSecBase {
      *
      * @throws WSSecurityException if the KeyAgreementParameterSpec cannot be created
      */
-    private KeyAgreementParameters buildKeyAgreementParameter(PublicKey recipientPublicKey)
+    private KeyAgreementParameters buildKeyAgreementParameter(PublicKey recipientPublicKey, String keyDerivationMethod)
             throws WSSecurityException {
         KeyAgreementParameters dhSpec;
         try {
             int keyBitLength = org.apache.xml.security.utils.KeyUtils.getAESKeyBitSizeForWrapAlgorithm(keyEncAlgo);
-            KeyDerivationParameters kdf = XMLCipherUtil.constructConcatKeyDerivationParameter(keyBitLength, digestAlgo);
+            KeyDerivationParameters kdf = null;
+            switch (keyDerivationMethod) {
+                case WSS4JConstants.KEYDERIVATION_CONCATKDF:
+                    kdf = XMLCipherUtil.constructConcatKeyDerivationParameter(keyBitLength, digestAlgo,
+                            "0000", "", "",  null, null);
+                    break;
+                case WSS4JConstants.KEYDERIVATION_HKDF:
+                    // use semi random value for salt.
+                    // rfc5869: Yet, even a salt value of less quality (shorter in
+                    //   size or with limited entropy) may still make a significant
+                    //   contribution to the security of the output keying material
+                    byte[] semiRandom = new byte[keyBitLength / 8];
+                    new Random().nextBytes(semiRandom);
+                    kdf = XMLCipherUtil.constructHKDFKeyDerivationParameter(keyBitLength, hmacAlgorithm, semiRandom, null);
+                    break;
+                default:
+                    throw new WSSecurityException(
+                            WSSecurityException.ErrorCode.FAILED_ENCRYPTION, "unsupportedKeyDerivationMethod",
+                            new Object[] {keyDerivationMethod}
+                    );
+
+            }
             KeyPair dhKeyPair = org.apache.xml.security.utils.KeyUtils.generateEphemeralDHKeyPair(recipientPublicKey, null);
             dhSpec = XMLCipherUtil.constructAgreementParameters(keyAgreementMethod,
                     KeyAgreementParameters.ActorType.ORIGINATOR, kdf, null, recipientPublicKey);
@@ -791,6 +830,22 @@ public class WSSecEncryptedKey extends WSSecBase {
 
     public void setKeyAgreementMethod(String keyAgreementMethod) {
         this.keyAgreementMethod = keyAgreementMethod;
+    }
+
+    public String getKeyDerivationMethod() {
+        return keyDerivationMethod;
+    }
+
+    public void setKeyDerivationMethod(String keyDerivationMethod) {
+        this.keyDerivationMethod = keyDerivationMethod;
+    }
+
+    public String getHmacAlgorithm() {
+        return hmacAlgorithm;
+    }
+
+    public void setHmacAlgorithm(String hmacAlgorithm) {
+        this.hmacAlgorithm = hmacAlgorithm;
     }
 
     /**

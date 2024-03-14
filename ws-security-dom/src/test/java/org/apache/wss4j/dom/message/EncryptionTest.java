@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -18,15 +18,6 @@
  */
 
 package org.apache.wss4j.dom.message;
-
-import java.security.Security;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.security.auth.callback.CallbackHandler;
 
 import org.apache.wss4j.common.WSEncryptionPart;
 import org.apache.wss4j.common.WSS4JConstants;
@@ -42,7 +33,6 @@ import org.apache.wss4j.dom.WSDataRef;
 import org.apache.wss4j.dom.common.CustomHandler;
 import org.apache.wss4j.dom.common.KeystoreCallbackHandler;
 import org.apache.wss4j.dom.common.SecretKeyCallbackHandler;
-
 import org.apache.wss4j.dom.engine.WSSConfig;
 import org.apache.wss4j.dom.engine.WSSecurityEngine;
 import org.apache.wss4j.dom.engine.WSSecurityEngineResult;
@@ -52,7 +42,6 @@ import org.apache.wss4j.dom.handler.WSHandlerConstants;
 import org.apache.wss4j.dom.handler.WSHandlerResult;
 import org.apache.wss4j.dom.str.STRParser.REFERENCE_TYPE;
 import org.apache.wss4j.dom.util.WSSecurityUtil;
-
 import org.apache.xml.security.utils.EncryptionConstants;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,23 +51,29 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.security.auth.callback.CallbackHandler;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.Security;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * A set of test-cases for encrypting and decrypting SOAP requests.
  */
 public class EncryptionTest {
     private static final org.slf4j.Logger LOG =
-        org.slf4j.LoggerFactory.getLogger(EncryptionTest.class);
+            org.slf4j.LoggerFactory.getLogger(EncryptionTest.class);
     private static final javax.xml.namespace.QName SOAP_BODY =
-        new javax.xml.namespace.QName(
-            WSConstants.URI_SOAP11_ENV,
-            "Body"
-        );
+            new javax.xml.namespace.QName(
+                    WSConstants.URI_SOAP11_ENV,
+                    "Body"
+            );
 
     private WSSecurityEngine secEngine = new WSSecurityEngine();
     private CallbackHandler keystoreCallbackHandler = new KeystoreCallbackHandler();
@@ -106,7 +101,7 @@ public class EncryptionTest {
     }
 
     @AfterEach
-    public void cleanup(){
+    public void cleanup() {
         JDKTestUtils.unregisterAuxiliaryProvider();
     }
 
@@ -136,7 +131,7 @@ public class EncryptionTest {
         LOG.info("After Encryption Triple DES....");
 
         String outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Encrypted message, RSA-15 keytransport, 3DES:");
             LOG.debug(outputString);
@@ -161,9 +156,9 @@ public class EncryptionTest {
         builder.setSymmetricEncAlgorithm(WSConstants.AES_128);
 
         WSEncryptionPart encP =
-            new WSEncryptionPart(
-                "add", "http://ws.apache.org/counter/counter_port_type", "Element"
-            );
+                new WSEncryptionPart(
+                        "add", "http://ws.apache.org/counter/counter_port_type", "Element"
+                );
         builder.getParts().add(encP);
 
         LOG.info("Before Encryption AES 128/RSA-15....");
@@ -172,19 +167,19 @@ public class EncryptionTest {
         encryptedDoc = builder.build(crypto, symmetricKey);
         LOG.info("After Encryption AES 128/RSA-15....");
         outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Encrypted message, RSA-15 keytransport, AES 128:");
             LOG.debug(outputString);
         }
         assertFalse(outputString.contains("counter_port_type"));
         WSHandlerResult results = verify(
-            encryptedDoc,
-            keystoreCallbackHandler,
-            new javax.xml.namespace.QName(
-                "http://ws.apache.org/counter/counter_port_type",
-                "add"
-            )
+                encryptedDoc,
+                keystoreCallbackHandler,
+                new javax.xml.namespace.QName(
+                        "http://ws.apache.org/counter/counter_port_type",
+                        "add"
+                )
         );
 
         WSSecurityEngineResult actionResult =
@@ -192,7 +187,7 @@ public class EncryptionTest {
         assertNotNull(actionResult.get(WSSecurityEngineResult.TAG_X509_CERTIFICATE));
         assertNotNull(actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE));
         REFERENCE_TYPE referenceType =
-            (REFERENCE_TYPE)actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE);
+                (REFERENCE_TYPE) actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE);
         assertTrue(referenceType == REFERENCE_TYPE.ISSUER_SERIAL);
     }
 
@@ -222,7 +217,7 @@ public class EncryptionTest {
         LOG.info("After Encryption Triple DES/RSA-OAEP....");
 
         String outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Encrypted message, RSA-OAEP keytransport, 3DES:");
             LOG.debug(outputString);
@@ -231,14 +226,14 @@ public class EncryptionTest {
 
         WSSecurityEngine newEngine = new WSSecurityEngine();
         WSHandlerResult results =
-            newEngine.processSecurityHeader(encryptedDoc, null, keystoreCallbackHandler, crypto);
+                newEngine.processSecurityHeader(encryptedDoc, null, keystoreCallbackHandler, crypto);
 
         WSSecurityEngineResult actionResult =
                 results.getActionResults().get(WSConstants.ENCR).get(0);
         assertNotNull(actionResult.get(WSSecurityEngineResult.TAG_X509_CERTIFICATE));
         assertNotNull(actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE));
         REFERENCE_TYPE referenceType =
-            (REFERENCE_TYPE)actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE);
+                (REFERENCE_TYPE) actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE);
         assertTrue(referenceType == REFERENCE_TYPE.KEY_IDENTIFIER);
     }
 
@@ -263,7 +258,7 @@ public class EncryptionTest {
         Document encryptedDoc = builder.build(crypto, symmetricKey);
 
         String outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug(outputString);
         }
@@ -271,7 +266,7 @@ public class EncryptionTest {
 
         WSSecurityEngine newEngine = new WSSecurityEngine();
         WSHandlerResult results =
-            newEngine.processSecurityHeader(encryptedDoc, null, keystoreCallbackHandler, crypto);
+                newEngine.processSecurityHeader(encryptedDoc, null, keystoreCallbackHandler, crypto);
 
         WSSecurityEngineResult actionResult =
                 results.getActionResults().get(WSConstants.ENCR).get(0);
@@ -304,7 +299,7 @@ public class EncryptionTest {
         if (LOG.isDebugEnabled()) {
             LOG.debug("After the first encryption:");
             String outputString =
-                XMLUtils.prettyDocumentToString(encryptedDoc);
+                    XMLUtils.prettyDocumentToString(encryptedDoc);
             LOG.debug(outputString);
         }
 
@@ -313,7 +308,7 @@ public class EncryptionTest {
         if (LOG.isDebugEnabled()) {
             LOG.debug("After the second encryption:");
             String outputString =
-                XMLUtils.prettyDocumentToString(encryptedEncryptedDoc);
+                    XMLUtils.prettyDocumentToString(encryptedEncryptedDoc);
             LOG.debug(outputString);
         }
 
@@ -329,22 +324,27 @@ public class EncryptionTest {
      * @throws Exception Thrown when there is any problem in signing or verification
      */
     @ParameterizedTest
-    @CsvSource({"xdh, X25519",
-            "xdh, X448",
-            "ec, secp256r1",
-            "ec, secp384r1",
-            "ec, secp521r1",
+    @CsvSource({"xdh, X25519, http://www.w3.org/2021/04/xmldsig-more#x25519, http://www.w3.org/2009/xmlenc11#ConcatKDF",
+            "xdh, X448, http://www.w3.org/2021/04/xmldsig-more#x448, http://www.w3.org/2009/xmlenc11#ConcatKDF",
+            "ec, secp256r1, http://www.w3.org/2009/xmlenc11#ECDH-ES, http://www.w3.org/2009/xmlenc11#ConcatKDF",
+            "ec, secp384r1, http://www.w3.org/2009/xmlenc11#ECDH-ES, http://www.w3.org/2009/xmlenc11#ConcatKDF",
+            "ec, secp521r1, http://www.w3.org/2009/xmlenc11#ECDH-ES, http://www.w3.org/2009/xmlenc11#ConcatKDF",
+            "xdh, X25519, http://www.w3.org/2021/04/xmldsig-more#x25519, http://www.w3.org/2021/04/xmldsig-more#hkdf",
+            "xdh, X448, http://www.w3.org/2021/04/xmldsig-more#x448, http://www.w3.org/2021/04/xmldsig-more#hkdf",
+            "ec, secp256r1, http://www.w3.org/2009/xmlenc11#ECDH-ES, http://www.w3.org/2021/04/xmldsig-more#hkdf",
+            "ec, secp384r1, http://www.w3.org/2009/xmlenc11#ECDH-ES, http://www.w3.org/2021/04/xmldsig-more#hkdf",
+            "ec, secp521r1, http://www.w3.org/2009/xmlenc11#ECDH-ES, http://www.w3.org/2021/04/xmldsig-more#hkdf",
     })
-    public void testEncryptionDecryptionECDSA_ES(String algorithm, String certAlias) throws Exception {
+    public void testEncryptionDecryptionECDSA_ES(String algorithm, String certAlias, String keyAgreementMethod, String kdfAlgorithm) throws Exception {
         try {
             if (!JDKTestUtils.isAlgorithmSupportedByJDK(algorithm)) {
-                LOG.info("Add AuxiliaryProvider to execute test with algorithm [{}] and cert alias [{}]", algorithm,  certAlias);
+                LOG.info("Add AuxiliaryProvider to execute test with algorithm [{}] and cert alias [{}]", algorithm, certAlias);
                 Security.addProvider(JDKTestUtils.getAuxiliaryProvider());
-            } else if (JDKTestUtils.getJDKVersion() == 11 && algorithm.equals("xdh") ) {
+            } else if (JDKTestUtils.getJDKVersion() == 11 && algorithm.equals("xdh")) {
                 // workaround for jdk11 and xdh keys
                 // https://bugs.openjdk.java.net/browse/JDK-8219381 or https://bugs.openjdk.org/browse/JDK-8213363
                 // set the auxiliary provider as first provider to parse the xdh private key
-                Security.insertProviderAt(JDKTestUtils.getAuxiliaryProvider(), 1 );
+                Security.insertProviderAt(JDKTestUtils.getAuxiliaryProvider(), 1);
             }
             Crypto encCrypto = CryptoFactory.getInstance("wss-ecdh.properties");
 
@@ -355,8 +355,13 @@ public class EncryptionTest {
             WSSecEncrypt builder = new WSSecEncrypt(secHeader);
             builder.setUserInfo(certAlias);
             builder.setKeyEncAlgo(WSConstants.KEYWRAP_AES128);
-            builder.setKeyAgreementMethod(WSConstants.AGREEMENT_METHOD_ECDH_ES);
-            builder.setDigestAlgorithm(WSS4JConstants.SHA256);
+            builder.setKeyAgreementMethod(keyAgreementMethod);
+            builder.setKeyDerivationMethod(kdfAlgorithm);
+            if (kdfAlgorithm.equalsIgnoreCase(WSS4JConstants.KEYDERIVATION_CONCATKDF)){
+                builder.setDigestAlgorithm(WSS4JConstants.SHA256);
+            } else {
+                builder.setDigestAlgorithm(WSS4JConstants.HMAC_SHA256);
+            }
             builder.setKeyIdentifierType(WSConstants.SKI_KEY_IDENTIFIER);
 
             LOG.info("Before Encryption ...");
@@ -368,15 +373,17 @@ public class EncryptionTest {
 
             String outputString =
                     XMLUtils.prettyDocumentToString(encryptedDoc);
+
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Encrypted message:");
                 LOG.debug(outputString);
+                Files.write(Paths.get("target/key-agreement-es-encrypted_"+ certAlias+".xml"), outputString.getBytes());
             }
             assertFalse(outputString.contains("counter_port_type"));
             // Check for algorithms and agreement method element
             assertTrue(outputString.contains(EncryptionConstants._TAG_AGREEMENTMETHOD));
             assertTrue(outputString.contains(WSConstants.KEYWRAP_AES128));
-            assertTrue(outputString.contains(WSConstants.AGREEMENT_METHOD_ECDH_ES));
+            assertTrue(outputString.contains(keyAgreementMethod));
 
             WSSecurityEngine newEngine = new WSSecurityEngine();
             WSHandlerResult results =
@@ -414,7 +421,7 @@ public class EncryptionTest {
         Document encryptedDoc = builder.build(encCrypto, symmetricKey);
 
         String outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Encrypted message with THUMBPRINT_IDENTIFIER:");
             LOG.debug(outputString);
@@ -429,7 +436,7 @@ public class EncryptionTest {
         assertNotNull(actionResult.get(WSSecurityEngineResult.TAG_X509_CERTIFICATE));
         assertNotNull(actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE));
         REFERENCE_TYPE referenceType =
-            (REFERENCE_TYPE)actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE);
+                (REFERENCE_TYPE) actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE);
         assertTrue(referenceType == REFERENCE_TYPE.THUMBPRINT_SHA1);
     }
 
@@ -457,7 +464,7 @@ public class EncryptionTest {
         Document encryptedDoc = builder.build(encCrypto, symmetricKey);
 
         String outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Encrypted message with ENCRYPTED_KEY_SHA1_IDENTIFIER:");
             LOG.debug(outputString);
@@ -492,7 +499,7 @@ public class EncryptionTest {
         secretKeyCallbackHandler.addSecretKey(identifier, keyData);
 
         String outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Encrypted message with ENCRYPTED_KEY_SHA1_IDENTIFIER:");
             LOG.debug(outputString);
@@ -527,14 +534,14 @@ public class EncryptionTest {
         CustomHandler handler = new CustomHandler();
         HandlerAction action = new HandlerAction(WSConstants.ENCR);
         handler.send(
-            doc,
-            reqData,
-            Collections.singletonList(action),
-            true
+                doc,
+                reqData,
+                Collections.singletonList(action),
+                true
         );
 
         String outputString =
-            XMLUtils.prettyDocumentToString(doc);
+                XMLUtils.prettyDocumentToString(doc);
         if (LOG.isDebugEnabled()) {
             LOG.debug(outputString);
         }
@@ -603,7 +610,7 @@ public class EncryptionTest {
         LOG.info("After Encryption Triple DES....");
 
         String outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Encrypted message, RSA-15 keytransport, 3DES:");
             LOG.debug(outputString);
@@ -612,7 +619,7 @@ public class EncryptionTest {
         WSHandlerResult results = verify(encryptedDoc, crypto, keystoreCallbackHandler);
 
         outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         assertTrue(outputString.contains("counter_port_type"));
 
         WSSecurityEngineResult actionResult =
@@ -620,7 +627,7 @@ public class EncryptionTest {
         assertNotNull(actionResult.get(WSSecurityEngineResult.TAG_X509_CERTIFICATE));
         assertNotNull(actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE));
         REFERENCE_TYPE referenceType =
-            (REFERENCE_TYPE)actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE);
+                (REFERENCE_TYPE) actionResult.get(WSSecurityEngineResult.TAG_X509_REFERENCE_TYPE);
         assertTrue(referenceType == REFERENCE_TYPE.DIRECT_REF);
     }
 
@@ -676,7 +683,7 @@ public class EncryptionTest {
         Document encryptedDoc = doc;
 
         String outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug(outputString);
         }
@@ -727,7 +734,7 @@ public class EncryptionTest {
         builder.encrypt(symmetricKey);
 
         String outputString =
-            XMLUtils.prettyDocumentToString(doc);
+                XMLUtils.prettyDocumentToString(doc);
         if (LOG.isDebugEnabled()) {
             LOG.debug(outputString);
         }
@@ -761,7 +768,7 @@ public class EncryptionTest {
         LOG.info("After Encryption Triple DES/RSA-OAEP....");
 
         String outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Encrypted message, RSA-OAEP keytransport, 3DES:");
             LOG.debug(outputString);
@@ -770,7 +777,7 @@ public class EncryptionTest {
 
         WSSecurityEngine newEngine = new WSSecurityEngine();
         WSHandlerResult results =
-            newEngine.processSecurityHeader(encryptedDoc, null, keystoreCallbackHandler, crypto);
+                newEngine.processSecurityHeader(encryptedDoc, null, keystoreCallbackHandler, crypto);
 
         WSSecurityEngineResult actionResult =
                 results.getActionResults().get(WSConstants.ENCR).get(0);
@@ -797,7 +804,7 @@ public class EncryptionTest {
         LOG.info("After Encryption Triple DES/RSA-OAEP....");
 
         String outputString =
-            XMLUtils.prettyDocumentToString(encryptedDoc);
+                XMLUtils.prettyDocumentToString(encryptedDoc);
         if (LOG.isDebugEnabled()) {
             LOG.debug("Encrypted message, RSA-OAEP keytransport, 3DES:");
             LOG.debug(outputString);
@@ -818,13 +825,13 @@ public class EncryptionTest {
      *             Thrown when there is a problem in verification
      */
     private WSHandlerResult verify(
-        Document doc, Crypto decCrypto, CallbackHandler handler
+            Document doc, Crypto decCrypto, CallbackHandler handler
     ) throws Exception {
         WSHandlerResult results =
-            secEngine.processSecurityHeader(doc, null, handler, decCrypto);
+                secEngine.processSecurityHeader(doc, null, handler, decCrypto);
         if (LOG.isDebugEnabled()) {
             String outputString =
-                XMLUtils.prettyDocumentToString(doc);
+                    XMLUtils.prettyDocumentToString(doc);
             LOG.debug(outputString);
         }
         return results;
@@ -841,14 +848,14 @@ public class EncryptionTest {
      */
     @SuppressWarnings("unchecked")
     private WSHandlerResult verify(
-        Document doc,
-        CallbackHandler handler,
-        javax.xml.namespace.QName expectedEncryptedElement
+            Document doc,
+            CallbackHandler handler,
+            javax.xml.namespace.QName expectedEncryptedElement
     ) throws Exception {
         final WSHandlerResult results =
-            secEngine.processSecurityHeader(doc, null, handler, null, crypto);
+                secEngine.processSecurityHeader(doc, null, handler, null, crypto);
         String outputString =
-            XMLUtils.prettyDocumentToString(doc);
+                XMLUtils.prettyDocumentToString(doc);
         if (LOG.isDebugEnabled()) {
             LOG.debug(outputString);
         }
@@ -864,20 +871,20 @@ public class EncryptionTest {
             assertNotNull(action);
             if ((action & WSConstants.ENCR) != 0) {
                 final java.util.List<WSDataRef> refs =
-                    (java.util.List<WSDataRef>) result.get(WSSecurityEngineResult.TAG_DATA_REF_URIS);
+                        (java.util.List<WSDataRef>) result.get(WSSecurityEngineResult.TAG_DATA_REF_URIS);
                 assertNotNull(refs);
                 encrypted = true;
                 for (WSDataRef ref : refs) {
                     assertNotNull(ref.getName());
                     assertEquals(
-                        expectedEncryptedElement,
-                        ref.getName()
+                            expectedEncryptedElement,
+                            ref.getName()
                     );
                     assertNotNull(ref.getProtectedElement());
                     if (LOG.isDebugEnabled()) {
                         LOG.debug("WSDataRef element: ");
                         LOG.debug(
-                            DOM2Writer.nodeToString(ref.getProtectedElement())
+                                DOM2Writer.nodeToString(ref.getProtectedElement())
                         );
                     }
                 }

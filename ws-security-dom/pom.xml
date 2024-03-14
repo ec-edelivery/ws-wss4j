@@ -20,10 +20,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.apache.wss4j</groupId>
+        <groupId>eu.europa.ec.edelivery.apache.wss4j</groupId>
         <artifactId>wss4j-parent</artifactId>
         <relativePath>../parent/pom.xml</relativePath>
-        <version>3.0.4-SNAPSHOT</version>
+        <version>3.0.4-RC01</version>
     </parent>
     <artifactId>wss4j-ws-security-dom</artifactId>
     <name>Apache WSS4J DOM WS-Security</name>
@@ -89,7 +89,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.wss4j</groupId>
+            <groupId>eu.europa.ec.edelivery.apache.wss4j</groupId>
             <artifactId>wss4j-ws-security-common</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
@@ -101,7 +101,7 @@
             <classifier>jakarta</classifier>
         </dependency>
         <dependency>
-            <groupId>org.apache.wss4j</groupId>
+            <groupId>eu.europa.ec.edelivery.apache.wss4j</groupId>
             <artifactId>wss4j-ws-security-common</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>

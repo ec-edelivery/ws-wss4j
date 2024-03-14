@@ -20,10 +20,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.apache.wss4j</groupId>
+        <groupId>eu.europa.ec.edelivery.apache.wss4j</groupId>
         <artifactId>wss4j-parent</artifactId>
         <relativePath>../parent/pom.xml</relativePath>
-        <version>3.0.4-SNAPSHOT</version>
+        <version>3.0.4-RC01</version>
     </parent>
     <artifactId>wss4j-integration</artifactId>
     <name>Apache WSS4J WS-Security Integration</name>
@@ -46,33 +46,33 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.wss4j</groupId>
+            <groupId>eu.europa.ec.edelivery.apache.wss4j</groupId>
             <artifactId>wss4j-ws-security-common</artifactId>
             <version>${project.version}</version>
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.wss4j</groupId>
+            <groupId>eu.europa.ec.edelivery.apache.wss4j</groupId>
             <artifactId>wss4j-ws-security-dom</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.wss4j</groupId>
+            <groupId>eu.europa.ec.edelivery.apache.wss4j</groupId>
             <artifactId>wss4j-ws-security-dom</artifactId>
             <version>${project.version}</version>
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.wss4j</groupId>
+            <groupId>eu.europa.ec.edelivery.apache.wss4j</groupId>
             <artifactId>wss4j-ws-security-stax</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.wss4j</groupId>
+            <groupId>eu.europa.ec.edelivery.apache.wss4j</groupId>
             <artifactId>wss4j-ws-security-stax</artifactId>
             <version>${project.version}</version>
             <classifier>tests</classifier>
