@@ -36,7 +36,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>ec.eu.europa.ec.edelivery.apache.santuario</groupId>
+            <groupId>eu.europa.ec.edelivery.apache.santuario</groupId>
             <artifactId>xmlsec</artifactId>
         </dependency>
     </dependencies>

@@ -102,7 +102,7 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>ec.eu.europa.ec.edelivery.apache.santuario</groupId>
+            <groupId>eu.europa.ec.edelivery.apache.santuario</groupId>
             <artifactId>xmlsec</artifactId>
             <scope>compile</scope>
         </dependency>
