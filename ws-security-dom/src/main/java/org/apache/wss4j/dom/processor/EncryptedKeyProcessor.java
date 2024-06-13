@@ -68,6 +68,7 @@ import org.apache.wss4j.dom.util.SignatureUtils;
 import org.apache.wss4j.dom.util.WSSecurityUtil;
 import org.apache.wss4j.dom.util.X509Util;
 import org.apache.xml.security.algorithms.JCEMapper;
+import org.apache.xml.security.encryption.KeyDerivationMethod;
 import org.apache.xml.security.encryption.XMLCipher;
 
 public class EncryptedKeyProcessor implements Processor {
@@ -150,9 +151,12 @@ public class EncryptedKeyProcessor implements Processor {
         PublicKey publicKey = null;
         boolean symmetricKeyWrap = isSymmetricKeyWrap(encryptedKeyTransportMethod);
         AgreementMethod agreementMethod = null;
+        KeyDerivationMethod keyDerivationMethod = null;
         if (isDHKeyWrap) {
             // get key agreement method value
             agreementMethod = getAgreementMethodFromElement(keyInfoChildElement);
+            keyDerivationMethod = getKeyDerivationFunction(agreementMethod);
+
             //  get the recipient key info element
             keyInfoChildElement = getRecipientKeyInfoChildElement(agreementMethod);
             if (keyInfoChildElement == null) {
@@ -182,6 +186,12 @@ public class EncryptedKeyProcessor implements Processor {
             if (agreementMethod != null) {
                 algorithmSuiteValidator.checkKeyAgreementMethodAlgorithm(
                         agreementMethod.getAlgorithm()
+                );
+            }
+
+            if (keyDerivationMethod != null) {
+                algorithmSuiteValidator.checkKeyDerivationFunction(
+                        keyDerivationMethod.getAlgorithm()
                 );
             }
         }
@@ -447,6 +457,24 @@ public class EncryptedKeyProcessor implements Processor {
     }
 
     /**
+     * Method retrieved the KeyDerivationMethod child element from the AgreementMethod object.
+     *
+     * @param agreementMethod The AgreementMethod object.
+     * @return the {@link KeyDerivationMethod} object or null if no KeyDerivation element is specified in DOM structure.
+     * @throws WSSecurityException if KeyDerivationMethod can not be parsed from Element structure.
+     */
+    private KeyDerivationMethod getKeyDerivationFunction(AgreementMethod agreementMethod) throws WSSecurityException {
+        if (agreementMethod == null) {
+            return null;
+        }
+        try {
+            return agreementMethod.getKeyDerivationMethod();
+        } catch (XMLSecurityException ex) {
+            throw new WSSecurityException(WSSecurityException.ErrorCode.INVALID_SECURITY, ex);
+        }
+    }
+
+    /**
      * Get the RecipientKeyInfo child element from the AgreementMethod element.
      *
      * @param agreementMethod The AgreementMethod element
@@ -544,7 +572,7 @@ public class EncryptedKeyProcessor implements Processor {
             while (node != null) {
                 if (Node.ELEMENT_NODE == node.getNodeType()) {
                     result++;
-                    strElement = (Element)node;
+                    strElement = (Element) node;
                 }
                 node = node.getNextSibling();
             }
@@ -585,7 +613,7 @@ public class EncryptedKeyProcessor implements Processor {
                     byte[] token = EncryptionUtils.getDecodedBase64EncodedData(x509Child);
                     if (token == null || token.length == 0) {
                         throw new WSSecurityException(WSSecurityException.ErrorCode.FAILURE, "invalidCertData",
-                                                      new Object[] {"0"});
+                                new Object[]{"0"});
                     }
                     try (InputStream in = new ByteArrayInputStream(token)) {
                         X509Certificate cert = data.getDecCrypto().loadCertificate(in);

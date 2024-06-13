@@ -152,6 +152,19 @@ public class AlgorithmSuiteValidator {
         }
     }
 
+    public void checkKeyDerivationFunction(
+            String keyDerivationFunction
+    ) throws WSSecurityException {
+        Set<String> keyDerivationFunctions = algorithmSuite.getDerivedKeyAlgorithms();
+        if (!keyDerivationFunctions.isEmpty()
+                && !keyDerivationFunctions.contains(keyDerivationFunction)) {
+            LOG.warn(
+                    "The Key derivation function does not match the requirement"
+            );
+            throw new WSSecurityException(WSSecurityException.ErrorCode.INVALID_SECURITY);
+        }
+    }
+
     public void checkSymmetricEncryptionAlgorithm(
         String symmetricAlgorithm
     ) throws WSSecurityException {
